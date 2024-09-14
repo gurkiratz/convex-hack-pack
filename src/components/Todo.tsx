@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Input } from './ui/input'
-import { useConvexAuth, useMutation, useQuery } from 'convex/react'
+import { useMutation, useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { Checkbox } from './ui/checkbox'
 import { Button } from './ui/button'
@@ -8,7 +8,7 @@ import { TodoType } from 'convex/schema'
 import { FiTrash2 } from 'react-icons/fi'
 import {
   SignInButton,
-  useAuth,
+  
 } from '@clerk/clerk-react'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 

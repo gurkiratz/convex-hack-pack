@@ -24,7 +24,7 @@ export const listTodos = query({
     status: todoArgs.status,
     order: v.optional(v.union(v.literal('asc'), v.literal('desc'))),
   },
-  handler: async (ctx, { status, order = 'desc' }) => {
+  handler: async (ctx) => {
     const todos = await ctx.db.query('todos').collect()
     return Promise.all(
       todos.map(async (todo) => {
