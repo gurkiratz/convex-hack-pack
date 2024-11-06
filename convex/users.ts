@@ -15,6 +15,7 @@ export const upsertFromClerk = internalMutation({
     const userAttributes = {
       name: `${data.first_name} ${data.last_name}`,
       externalId: data.id,
+      email: data.email_addresses[0].email_address
     }
 
     const user = await userByExternalId(ctx, data.id)
@@ -33,6 +34,13 @@ export const deleteFromClerk = internalMutation({
 
     if (user !== null) {
       await ctx.db.delete(user._id)
+
+      // TODO: Fix Delete todos
+      const todos = await ctx.db.query('todos').filter((q) => q.eq('externalId', clerkUserId)).collect()
+      console.log(todos)
+      for (const todo of todos) {
+        await ctx.db.delete(todo._id)
+      }
     } else {
       console.warn(
         `Can't delete user, there is none for Clerk user ID: ${clerkUserId}`

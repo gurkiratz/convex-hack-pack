@@ -10,7 +10,7 @@ const Navbar = () => {
     <div className="w-full max-w-2xl">
       <div className='container flex  justify-between items-center py-1'>
 
-      <p className="font-semibold">TodoIst App</p>
+      <a href='/' className="font-semibold text-white">TodoIst App</a>
       <div>
         <Unauthenticated>
           <SignInButton>

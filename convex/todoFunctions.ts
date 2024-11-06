@@ -13,7 +13,7 @@ export const addTodo = mutation({
     await ctx.db.insert('todos', {
       status,
       updatedTime,
-      userId: user._id,
+      externalId: user.externalId,
       ...args,
     })
   },
@@ -23,19 +23,14 @@ export const listTodos = query({
   args: {
     status: todoArgs.status,
     order: v.optional(v.union(v.literal('asc'), v.literal('desc'))),
+    externalId: v.string()
   },
-  handler: async (ctx) => {
-    const todos = await ctx.db.query('todos').collect()
+  handler: async (ctx, args) => {
+    const todos = await ctx.db.query('todos')
+    .filter(q => q.eq(q.field('externalId'), args.externalId))
+    .collect()
     return Promise.all(
-      todos.map(async (todo) => {
-        // For each todo in this channel, fetch the `User` who wrote it and
-        // insert their name into the `author` field.
-        const user = await ctx.db.get(todo.userId)
-        return {
-          user: user?.name ?? 'Anonymous',
-          ...todo,
-        }
-      })
+      todos
     )
   },
 })

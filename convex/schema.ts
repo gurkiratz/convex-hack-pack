@@ -9,7 +9,7 @@ export const todoFields = v.object({
     v.union(v.literal('todo'), v.literal('in-progress'), v.literal('done'))
   ),
   updatedTime: v.optional(v.number()),
-  userId: v.id('users'),
+  externalId: v.string(),
 })
 
 export const todoArgs = {
@@ -34,12 +34,13 @@ export default defineSchema(
       random: v.boolean(),
     }),
 
-    todos: defineTable(todoFields).index('byUserId', ['userId']),
+    todos: defineTable(todoFields).index('byUserId', ['externalId']),
 
     users: defineTable({
       name: v.string(),
       // this is the Clerk ID, stored in the subject JWT field
       externalId: v.string(),
+      email: v.optional(v.string()),
     }).index('byExternalId', ['externalId']),
   },
   { schemaValidation: true }

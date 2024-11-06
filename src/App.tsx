@@ -4,15 +4,11 @@ import Navbar from './components/Navbar'
 function App() {
   return (
     <>
-      <main className="container md:border-l md:border-r max-w-2xl flex flex-col items-center gap-8">
+      <main className="container md:border-l md:border-r max-w-2xl flex flex-col items-center gap-8 min-h-screen">
     <Navbar />
     <hr className='text-white w-full absolute top-10' />
-        {/* <h1 className="text-4xl font-extrabold mt-8 text-center">
-          Your Todo List
-        </h1> */}
-
         <MyTodoList />
-        <footer className="text-center text-xs mb-5 mt-10 w-full">
+        <footer className="text-center text-xs mb-5 mt-10 w-full fixed bottom-1">
         <p>
           Built with <a href="https://convex.dev">Convex</a>,{' '}
           <a href="https://www.typescriptlang.org">TypeScript</a>,{' '}
@@ -20,9 +16,9 @@ function App() {
           <a href="https://vitejs.dev">Vite</a>
         </p>
         <p>
-          Random app ideas thanks to{' '}
-          <a target="_blank" href="https://appideagenerator.com/">
-            appideagenerator.com
+          Built with ❤️ by {' '}
+          <a target="_blank" href="https://github.com/gurkiratz/convex-todo-app">
+            Gurkirat
           </a>
         </p>
       </footer>

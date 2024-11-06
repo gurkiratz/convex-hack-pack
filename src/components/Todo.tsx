@@ -13,7 +13,7 @@ import {
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 
 const TodoContainer = () => {
-  const { isLoading, isAuthenticated } = useCurrentUser()
+  const { isLoading, isAuthenticated, userId } = useCurrentUser()
 
   const [newTodo, setNewTodo] = useState('')
   const addTodo = useMutation(api.todoFunctions.addTodo)
@@ -62,20 +62,20 @@ const TodoContainer = () => {
         <SignInButton />
       ) : (
         <>
-          <TodoList />
+          <TodoList userId={userId!} />
         </>
       )}
     </div>
   )
 }
 
-const TodoList = () => {
+const TodoList = ({userId}: {userId: string}) => {
   const [isUpdating, setIsUpdating] = useState(false)
 
   const removeTodo = useMutation(api.todoFunctions.deleteTodo)
   const updateTodo = useMutation(api.todoFunctions.updateTodo)
 
-  const todos = useQuery(api.todoFunctions.listTodos, {})
+  const todos = useQuery(api.todoFunctions.listTodos, {externalId: userId})
     ?.sort((a, b) => b._creationTime - a._creationTime)
     .sort((a, b) => {
       if (a.status === 'todo' && b.status !== 'todo') return -1
